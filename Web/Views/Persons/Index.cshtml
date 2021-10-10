@@ -1,0 +1,27 @@
+﻿@model Timeline.Web.Models.Persons.IndexModel;
+
+@{
+    ViewData["Title"] = "Persons";
+}
+
+<div>
+    <h2 class="display-4">Persons</h2>
+
+    @if (Model.Items.Any())
+    {
+        var template = Model.Items.First();
+        <table>
+            <tr>
+                <th>@Html.LabelFor(i => template.Id)</th>
+                <th>@Html.LabelFor(i => template.Name)</th>
+            </tr>
+            @foreach(var item in Model.Items)
+            {
+                <tr>
+                    <td>@Html.ValueFor(i => item.Id)</td>
+                    <td>@Html.ValueFor(i => item.Name)</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
