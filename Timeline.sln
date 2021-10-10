@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeline.Web", "Web\Timeline.Web.csproj", "{C35B3E0F-5E45-49E5-82A5-766D1DDFA295}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeline.Web", "Timeline.Web\Timeline.Web.csproj", "{C35B3E0F-5E45-49E5-82A5-766D1DDFA295}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeline.Data", "Timeline.Data\Timeline.Data.csproj", "{0BD1A205-EFCB-481D-88A6-3A909AADFA51}"
 EndProject
