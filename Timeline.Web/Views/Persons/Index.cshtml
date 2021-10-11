@@ -5,21 +5,25 @@
 }
 
 <div>
-    <h2 class="display-4">Persons</h2>
+    <h2>Persons</h2>
 
     @if (Model.Items.Any())
     {
         var template = Model.Items.First();
-        <table>
+        <table class="table-bordered">
             <tr>
-                <th>@Html.LabelFor(i => template.Id)</th>
-                <th>@Html.LabelFor(i => template.Name)</th>
+                <th style="padding-right: 5em">@Html.LabelFor(i => template.Name)</th>
+                <th style="padding-right: 5em">@Html.LabelFor(i => template.Created)</th>
+                <th style="padding-right: 5em">@Html.LabelFor(i => template.Modified)</th>
+                <th style="padding-right: 5em">@Html.LabelFor(i => template.Id)</th>
             </tr>
             @foreach(var item in Model.Items)
             {
                 <tr>
-                    <td>@Html.ValueFor(i => item.Id)</td>
-                    <td>@Html.ValueFor(i => item.Name)</td>
+                    <td style="padding-right: 5em">@Html.ValueFor(i => item.Name)</td>
+                    <td style="padding-right: 5em">@Html.ValueFor(i => item.Created)</td>
+                    <td style="padding-right: 5em">@Html.ValueFor(i => item.Modified)</td>
+                    <td style="padding-right: 5em">@Html.ValueFor(i => item.Id)</td>
                 </tr>
             }
         </table>

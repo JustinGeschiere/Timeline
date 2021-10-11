@@ -3,7 +3,7 @@ using Timeline.Web.Models.Paging;
 
 namespace Timeline.Web.Models.Persons
 {
-	public struct IndexModel
+	public class IndexModel
 	{
 		public IndexModel(IEnumerable<IndexItemModel> items, PagingModel paging)
 		{

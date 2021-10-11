@@ -6,8 +6,9 @@ namespace Timeline.Repositories.Interfaces
 {
 	public interface IPersonsRepository
 	{
-		IQueryable<Person> Get();
-		Person Get(Guid id);
+		IQueryable<Person> All();
+		Person GetById(Guid id);
+		Person GetByName(string name);
 		void Add(Person entity);
 		void Update(Person entity);
 		void Remove(Person entity);

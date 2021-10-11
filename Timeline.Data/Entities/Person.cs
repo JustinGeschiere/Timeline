@@ -9,6 +9,10 @@ namespace Timeline.Data.Entities
 
 		public string Name { get; set; }
 
+		public DateTime Created { get; set; }
+
+		public DateTime Modified { get; set; }
+
 		public ICollection<Post> Posts { get; set; }
 	}
 }
