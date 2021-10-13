@@ -9,7 +9,8 @@ namespace Timeline.Services
 		public static IServiceCollection AddTimelineServices(this IServiceCollection services)
 		{
 			return services
-				.AddScoped<IPersonsService, PersonsService>();
+				.AddScoped<IPersonsService, PersonsService>()
+				.AddScoped<IPersonContext, PersonContext>();
 		}
 	}
 }

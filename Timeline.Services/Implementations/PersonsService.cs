@@ -21,6 +21,11 @@ namespace Timeline.Services.Implementations
 			_logger = logger;
 		}
 
+		public Person GetPersonByName(string name)
+		{
+			return _personsRepository.GetByName(name);
+		}
+
 		public IndexModel GetIndexModel(int currentPage, int pageSize)
 		{
 			var query = _personsRepository.All();
