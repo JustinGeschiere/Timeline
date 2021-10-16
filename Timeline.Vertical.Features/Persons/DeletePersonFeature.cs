@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Timeline.Data;
-using Timeline.Data.Entities;
 using Timeline.Vertical.Features.Bases;
 using Timeline.Vertical.Features.Interfaces;
 
 namespace Timeline.Vertical.Features.Persons
 {
-	public class CreatePersonFeature : BaseFeature<CreatePersonFeature.Validator, CreatePersonFeature.Handler, CreatePersonFeature.Command, CreatePersonFeature.Result>
+	public class DeletePersonFeature : BaseFeature<DeletePersonFeature.Validator, DeletePersonFeature.Handler, DeletePersonFeature.Command, DeletePersonFeature.Result>
 	{
-		public CreatePersonFeature(Validator validator, Handler handler)
+		public DeletePersonFeature(Validator validator, Handler handler)
 			: base(validator, handler)
 		{ }
 
@@ -23,7 +22,8 @@ namespace Timeline.Vertical.Features.Persons
 
 		public class Result
 		{
-			public Person Data { get; set; }
+			public Guid DeletedId { get; set; }
+			public string DeletedName { get; set; }
 
 			public override string ToString()
 			{
@@ -41,11 +41,6 @@ namespace Timeline.Vertical.Features.Persons
 				if (string.IsNullOrWhiteSpace(command.Name))
 				{
 					exceptions.Add(new ValidationException($"{nameof(command.Name)} is required"));
-				}
-
-				if (command.Name.Length > 20)
-				{
-					exceptions.Add(new ValidationException($"{nameof(command.Name)} has a character limit of 20"));
 				}
 
 				if (exceptions.Any())
@@ -66,28 +61,19 @@ namespace Timeline.Vertical.Features.Persons
 
 			public Result Handle(Command command)
 			{
-				var existing = _context.Persons.FirstOrDefault(i => i.Name.Equals(command.Name));
-				if (existing != null)
+				var entity = _context.Persons.FirstOrDefault(i => i.Name.Equals(command.Name));
+				if (entity == null)
 				{
-					throw new ArgumentException("A person with this name already exists");
+					throw new ArgumentException("A person with this name could not be found");
 				}
 
-				var utcNow = DateTime.UtcNow;
-
-				var entity = new Person()
-				{
-					Id = Guid.NewGuid(),
-					Name = command.Name,
-					Created = utcNow,
-					Modified = utcNow
-				};
-
-				_context.Persons.Add(entity);
+				_context.Persons.Remove(entity);
 				_context.SaveChanges();
 
 				return new Result()
 				{
-					Data = entity
+					DeletedId = entity.Id,
+					DeletedName = entity.Name
 				};
 			}
 		}

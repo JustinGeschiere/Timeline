@@ -1,4 +1,6 @@
-﻿namespace Timeline.Vertical.Features.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Timeline.Vertical.Features.Interfaces
 {
 	public interface IFeature<TCommand, TResult>
 	{

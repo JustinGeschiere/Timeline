@@ -7,13 +7,17 @@ namespace Timeline.Vertical.Features
 	{
 		public static IServiceCollection AddFeatures(this IServiceCollection services)
 		{
+			services.AddScoped<GetPagedPersonOverviewFeature>()
+				.AddScoped<GetPagedPersonOverviewFeature.Validator>()
+				.AddScoped<GetPagedPersonOverviewFeature.Handler>();
+
 			services.AddScoped<CreatePersonFeature>()
 				.AddScoped<CreatePersonFeature.Validator>()
 				.AddScoped<CreatePersonFeature.Handler>();
 
-			services.AddScoped<GetPagedPersonOverviewFeature>()
-				.AddScoped<GetPagedPersonOverviewFeature.Validator>()
-				.AddScoped<GetPagedPersonOverviewFeature.Handler>();
+			services.AddScoped<DeletePersonFeature>()
+				.AddScoped<DeletePersonFeature.Validator>()
+				.AddScoped<DeletePersonFeature.Handler>();
 
 			return services;
 		}

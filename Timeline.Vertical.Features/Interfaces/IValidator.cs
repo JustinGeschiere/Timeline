@@ -2,16 +2,8 @@
 
 namespace Timeline.Vertical.Features.Interfaces
 {
-	public interface IValidator
-	{ }
-
-	public interface IValidator<TCommand> : IValidator
+	public interface IValidator<TCommand>
 	{
 		void Validate(TCommand command);
-	}
-
-	public interface IValidatorAsync<TCommand> : IValidator
-	{
-		Task<bool> ValidateAsync(TCommand command);
 	}
 }

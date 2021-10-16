@@ -18,6 +18,11 @@ namespace Timeline.Vertical.Web.Controllers
 		{
 			return this.ExecuteContent(feature, command);
 		}
+
+		public IActionResult Delete([FromServices] DeletePersonFeature feature, [FromQuery] DeletePersonFeature.Command command)
+		{
+			return this.ExecuteContent(feature, command);
+		}
 		#endregion
 	}
 }
