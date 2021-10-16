@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Timeline.Data\Timeline.Data.csproj" />
+    <ProjectReference Include="..\Timeline.Web.Models\Timeline.Web.Models.csproj" />
+  </ItemGroup>
+
+</Project>

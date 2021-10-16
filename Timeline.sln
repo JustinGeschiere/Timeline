@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeline.Web", "Timeline.Web\Timeline.Web.csproj", "{C35B3E0F-5E45-49E5-82A5-766D1DDFA295}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeline.Web", "Timeline.Web\Timeline.Web.csproj", "{C35B3E0F-5E45-49E5-82A5-766D1DDFA295}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeline.Data", "Timeline.Data\Timeline.Data.csproj", "{0BD1A205-EFCB-481D-88A6-3A909AADFA51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeline.Services", "Timeline.Services\Timeline.Services.csproj", "{D4995B71-02D8-4FDD-AA6B-D71090C6A9BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeline.Services", "Timeline.Services\Timeline.Services.csproj", "{D4995B71-02D8-4FDD-AA6B-D71090C6A9BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeline.Repositories", "Timeline.Repositories\Timeline.Repositories.csproj", "{4F5636F7-83EC-4E2A-A6E6-207EF745C05B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeline.Repositories", "Timeline.Repositories\Timeline.Repositories.csproj", "{4F5636F7-83EC-4E2A-A6E6-207EF745C05B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeline.Web.Models", "Timeline.Web.Models\Timeline.Web.Models.csproj", "{92D82D22-C90B-4D8C-AE86-F0E263174F41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timeline.Web.Models", "Timeline.Web.Models\Timeline.Web.Models.csproj", "{92D82D22-C90B-4D8C-AE86-F0E263174F41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeline.Vertical.Web", "Timeline.Vertical.Web\Timeline.Vertical.Web.csproj", "{3BBD2B46-A518-4922-8A6E-5BDE58B7F5EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timeline.Vertical.Features", "Timeline.Vertical.Features\Timeline.Vertical.Features.csproj", "{2698A06A-DAF1-4BA1-960E-8F2C355DB8A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{92D82D22-C90B-4D8C-AE86-F0E263174F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92D82D22-C90B-4D8C-AE86-F0E263174F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92D82D22-C90B-4D8C-AE86-F0E263174F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BBD2B46-A518-4922-8A6E-5BDE58B7F5EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BBD2B46-A518-4922-8A6E-5BDE58B7F5EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BBD2B46-A518-4922-8A6E-5BDE58B7F5EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BBD2B46-A518-4922-8A6E-5BDE58B7F5EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2698A06A-DAF1-4BA1-960E-8F2C355DB8A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2698A06A-DAF1-4BA1-960E-8F2C355DB8A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2698A06A-DAF1-4BA1-960E-8F2C355DB8A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2698A06A-DAF1-4BA1-960E-8F2C355DB8A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
