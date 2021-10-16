@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using Timeline.Data;
 using Timeline.Vertical.Features.Bases;
+using Timeline.Vertical.Features.Helpers;
 using Timeline.Vertical.Features.Interfaces;
 using Timeline.Web.Models.Paging;
 using Timeline.Web.Models.Persons;
 
 namespace Timeline.Vertical.Features.Persons
 {
-	public class GetPagedPersonOverviewFeature : BaseFeature<GetPagedPersonOverviewFeature.Validator, GetPagedPersonOverviewFeature.Handler, GetPagedPersonOverviewFeature.Command, GetPagedPersonOverviewFeature.Result>
+	public class GetPagedPersonOverviewFeature : BaseFeatureAsync<GetPagedPersonOverviewFeature.Validator, GetPagedPersonOverviewFeature.Handler, GetPagedPersonOverviewFeature.Command, GetPagedPersonOverviewFeature.Result>
 	{
 		public GetPagedPersonOverviewFeature(Validator validator, Handler handler)
 			: base(validator, handler)
@@ -18,7 +20,10 @@ namespace Timeline.Vertical.Features.Persons
 
 		public class Command
 		{
+			[Range(1, ushort.MaxValue)]
 			public ushort CurrentPage { get; set; } = 1;
+
+			[Range(1, ushort.MaxValue)]
 			public ushort PageSize { get; set; } = 10;
 		}
 
@@ -31,18 +36,7 @@ namespace Timeline.Vertical.Features.Persons
 		{
 			public void Validate(Command command)
 			{
-				var exceptions = new List<Exception>();
-
-				// Some custom validation for now, use data annotations later
-				if (command.CurrentPage < 1)
-				{
-					exceptions.Add(new ValidationException($"{nameof(command.CurrentPage)} has a minimal value of 1"));
-				}
-
-				if (command.PageSize < 1)
-				{
-					exceptions.Add(new ValidationException($"{nameof(command.PageSize)} has a minimal value of 1"));
-				}
+				var exceptions = ValidationHelper.ValidateAnnotations(command);
 
 				if (exceptions.Any())
 				{
@@ -51,7 +45,7 @@ namespace Timeline.Vertical.Features.Persons
 			}
 		}
 
-		public class Handler : IHandler<Command, Result>
+		public class Handler : IHandlerAsync<Command, Result>
 		{
 			private readonly TimelineContext _context;
 
@@ -60,16 +54,17 @@ namespace Timeline.Vertical.Features.Persons
 				_context = context;
 			}
 
-			public Result Handle(Command command)
+			public async Task<Result> HandleAsync(Command command)
 			{
 				var skip = (command.CurrentPage - 1) * command.PageSize;
 				var take = command.PageSize;
 
 				var query = _context.Persons;
+				var totalCount = await query.CountAsync();
 				var persons = query.Skip(skip).Take(take);
 
 				var items = persons.Select(i => new IndexItemModel(i));
-				var paging = new PagingModel(command.CurrentPage, command.PageSize, query.Count());
+				var paging = new PagingModel(command.CurrentPage, command.PageSize, totalCount);
 
 				var model = new IndexModel(items, paging);
 

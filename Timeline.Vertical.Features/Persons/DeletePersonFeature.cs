@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Timeline.Data;
 using Timeline.Vertical.Features.Bases;
+using Timeline.Vertical.Features.Helpers;
 using Timeline.Vertical.Features.Interfaces;
 
 namespace Timeline.Vertical.Features.Persons
@@ -17,6 +17,7 @@ namespace Timeline.Vertical.Features.Persons
 
 		public class Command
 		{
+			[Required(AllowEmptyStrings = false)]
 			public string Name { get; set; }
 		}
 
@@ -35,13 +36,7 @@ namespace Timeline.Vertical.Features.Persons
 		{
 			public void Validate(Command command)
 			{
-				var exceptions = new List<Exception>();
-
-				// Some custom validation for now, use data annotations later
-				if (string.IsNullOrWhiteSpace(command.Name))
-				{
-					exceptions.Add(new ValidationException($"{nameof(command.Name)} is required"));
-				}
+				var exceptions = ValidationHelper.ValidateAnnotations(command);
 
 				if (exceptions.Any())
 				{

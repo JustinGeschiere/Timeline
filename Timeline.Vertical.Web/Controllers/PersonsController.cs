@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Timeline.Vertical.Features.Persons;
 using Timeline.Vertical.Web.Extensions;
 
@@ -7,9 +8,9 @@ namespace Timeline.Vertical.Web.Controllers
 	public class PersonsController : Controller
 	{
 		#region Queries
-		public IActionResult Index([FromServices] GetPagedPersonOverviewFeature feature, [FromQuery] GetPagedPersonOverviewFeature.Command command)
+		public async Task<IActionResult> Index([FromServices] GetPagedPersonOverviewFeature feature, [FromQuery] GetPagedPersonOverviewFeature.Command command)
 		{
-			return this.ExecuteView(feature, command);
+			return await this.ExecuteView(feature, command);
 		}
 		#endregion
 
