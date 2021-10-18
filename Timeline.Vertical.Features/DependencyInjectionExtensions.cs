@@ -7,6 +7,8 @@ namespace Timeline.Vertical.Features
 	{
 		public static IServiceCollection AddFeatures(this IServiceCollection services)
 		{
+			// TODO: Automatically inject all features, validators and handlers via assembly
+
 			services.AddScoped<GetPagedPersonOverviewFeature>()
 				.AddScoped<GetPagedPersonOverviewFeature.Validator>()
 				.AddScoped<GetPagedPersonOverviewFeature.Handler>();
