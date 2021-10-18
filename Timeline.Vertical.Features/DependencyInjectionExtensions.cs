@@ -23,6 +23,10 @@ namespace Timeline.Vertical.Features
 				.AddScoped<GetPersonFeature.Validator>()
 				.AddScoped<GetPersonFeature.Handler>();
 
+			services.AddScoped<GetPersonsFeature>()
+				.AddScoped<GetPersonsFeature.Validator>()
+				.AddScoped<GetPersonsFeature.Handler>();
+
 			return services;
 		}
 	}

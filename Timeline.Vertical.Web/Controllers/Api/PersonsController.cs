@@ -16,10 +16,9 @@ namespace Timeline.Vertical.Web.Controllers.Api
 		}
 
 		[HttpGet("GetPersons")]
-		public async Task<IActionResult> GetPersonsAsync([FromServices] object feature, [FromQuery] object command)
+		public async Task<IActionResult> GetPersonsAsync([FromServices] GetPersonsFeature feature, [FromQuery] GetPersonsFeature.Command command)
 		{
-			throw new System.NotImplementedException();
-			//return await this.ExecuteJson(feature, command);
+			return await this.ExecuteJson(feature, command);
 		}
 	}
 }
