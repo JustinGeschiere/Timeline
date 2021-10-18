@@ -24,6 +24,8 @@ namespace Timeline.Vertical.Web
 
 			services.AddFeatures();
 
+			// TODO: Add swagger for easier api testing
+
 			services.AddControllersWithViews();
 		}
 
