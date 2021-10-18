@@ -35,5 +35,15 @@ namespace Timeline.Vertical.Web.Extensions
 		{
 			return controller.Content((await feature.ExecuteAsync(command)).ToString());
 		}
+
+		public static IActionResult ExecuteJson<TCommand, TResult>(this Controller controller, IFeature<TCommand, TResult> feature, TCommand command)
+		{
+			return controller.Json(feature.Execute(command));
+		}
+
+		public static async Task<IActionResult> ExecuteJson<TCommand, TResult>(this Controller controller, IFeatureAsync<TCommand, TResult> feature, TCommand command)
+		{
+			return controller.Json((await feature.ExecuteAsync(command)));
+		}
 	}
 }

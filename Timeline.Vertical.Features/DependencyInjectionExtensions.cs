@@ -19,6 +19,10 @@ namespace Timeline.Vertical.Features
 				.AddScoped<DeletePersonFeature.Validator>()
 				.AddScoped<DeletePersonFeature.Handler>();
 
+			services.AddScoped<GetPersonFeature>()
+				.AddScoped<GetPersonFeature.Validator>()
+				.AddScoped<GetPersonFeature.Handler>();
+
 			return services;
 		}
 	}
