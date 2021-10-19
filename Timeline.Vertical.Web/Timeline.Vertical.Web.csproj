@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Timeline.Data\Timeline.Data.csproj" />
     <ProjectReference Include="..\Timeline.Vertical.Features\Timeline.Vertical.Features.csproj" />
     <ProjectReference Include="..\Timeline.Web.Models\Timeline.Web.Models.csproj" />

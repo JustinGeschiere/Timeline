@@ -4,7 +4,7 @@ using Timeline.Vertical.Features.Interfaces;
 
 namespace Timeline.Vertical.Web.Extensions
 {
-	public static class MediatorExtensions
+	public static class ControllerExtensions
 	{
 		public static IActionResult ExecuteView<TCommand, TResult>(this Controller controller, IFeature<TCommand, TResult> feature, TCommand command)
 		{

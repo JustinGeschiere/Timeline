@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Timeline.Data;
 using Timeline.Vertical.Features;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Timeline.Vertical.Web
 {
@@ -26,6 +27,8 @@ namespace Timeline.Vertical.Web
 
 			// TODO: Add swagger for easier api testing
 
+			services.AddSwaggerGen();
+
 			services.AddControllersWithViews();
 		}
 
@@ -44,6 +47,13 @@ namespace Timeline.Vertical.Web
 			}
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
+
+			app.UseSwagger();
+			app.UseSwaggerUI(options =>
+			{
+				options.SwaggerEndpoint("/swagger/v1/swagger.json", "Timeline api v1");
+				options.RoutePrefix = string.Empty;
+			});
 
 			app.UseRouting();
 
