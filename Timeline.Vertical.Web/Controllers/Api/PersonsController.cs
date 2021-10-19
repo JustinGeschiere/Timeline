@@ -9,16 +9,23 @@ namespace Timeline.Vertical.Web.Controllers.Api
 	[ApiController]
 	public class PersonsController : Controller
 	{
-		[HttpGet("GetPerson")]
+		[HttpGet("Get")]
 		public async Task<IActionResult> GetPersonAsync([FromServices] GetPersonFeature feature, [FromQuery] GetPersonFeature.Command command)
 		{
 			return await this.ExecuteJson(feature, command);
 		}
 
-		[HttpGet("GetPersons")]
+		[HttpGet("GetPaged")]
 		public async Task<IActionResult> GetPersonsAsync([FromServices] GetPersonsFeature feature, [FromQuery] GetPersonsFeature.Command command)
 		{
 			return await this.ExecuteJson(feature, command);
+		}
+
+		[HttpGet("Delete")]
+		public async Task<IActionResult> DeletePersonAsync([FromServices] object feature, [FromQuery] object command)
+		{
+			//return await this.ExecuteJson(feature, command);
+			throw new System.NotImplementedException();
 		}
 	}
 }

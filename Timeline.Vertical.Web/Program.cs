@@ -7,7 +7,9 @@ namespace Timeline.Vertical.Web
 	{
 		public static void Main(string[] args)
 		{
-			CreateHostBuilder(args).Build().Run();
+			using var host = CreateHostBuilder(args).Build();
+			host.Start();
+			host.WaitForShutdown();
 		}
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
