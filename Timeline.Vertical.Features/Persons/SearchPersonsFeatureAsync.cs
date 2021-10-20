@@ -8,25 +8,33 @@ using Timeline.Data.Entities;
 using Timeline.Vertical.Features.Bases;
 using Timeline.Vertical.Features.Helpers;
 using Timeline.Vertical.Features.Interfaces;
+using Timeline.Web.Models.Paging;
 
 namespace Timeline.Vertical.Features.Persons
 {
-	public class GetPersonFeature : BaseFeatureAsync<GetPersonFeature.Validator, GetPersonFeature.Handler, GetPersonFeature.Command, GetPersonFeature.Result>
+	public class SearchPersonsFeatureAsync : BaseFeatureAsync<SearchPersonsFeatureAsync.Validator, SearchPersonsFeatureAsync.Handler, SearchPersonsFeatureAsync.Command, SearchPersonsFeatureAsync.Result>
 	{
-		public GetPersonFeature(Validator validator, Handler handler)
+		public SearchPersonsFeatureAsync(Validator validator, Handler handler)
 			: base(validator, handler)
 		{ }
 
 		public class Command
 		{
-			public Guid Id { get; set; }
+			[Required]
+			public string Search;
 
-			public string Name { get; set; }
+			[Range(1, ushort.MaxValue)]
+			public ushort CurrentPage { get; set; } = 1;
+
+			[Range(1, ushort.MaxValue)]
+			public ushort PageSize { get; set; } = 10;
 		}
 
 		public class Result
 		{
-			public Person Data { get; set; }
+			public Person[] Data { get; set; }
+
+			public PagingModel Paging { get; set; }
 		}
 
 		public class Validator : IValidator<Command>
@@ -34,11 +42,6 @@ namespace Timeline.Vertical.Features.Persons
 			public void Validate(Command command)
 			{
 				var exceptions = ValidationHelper.ValidateAnnotations(command);
-
-				if (Guid.Empty.Equals(command.Id) && string.IsNullOrWhiteSpace(command.Name))
-				{
-					exceptions = exceptions.Append(new ValidationException($"Either {nameof(command.Id)} or {nameof(command.Name)} is required"));
-				}
 
 				if (exceptions.Any())
 				{
@@ -58,28 +61,15 @@ namespace Timeline.Vertical.Features.Persons
 
 			public async Task<Result> HandleAsync(Command command)
 			{
-				IQueryable<Person> query = _context.Persons;
+				IQueryable<Person> query = _context.Persons.Where(i => i.Name.Contains(command.Search));
 
-				if (!Guid.Empty.Equals(command.Id))
-				{
-					query = query.Where(i => i.Id == command.Id);
-				}
-
-				if (!string.IsNullOrWhiteSpace(command.Name))
-				{
-					query = query.Where(i => i.Name.Equals(command.Name));
-				}
-
-				var entity = await query.FirstOrDefaultAsync();
-
-				if (entity == null)
-				{
-					throw new ArgumentException("No person could be found with the provided input");
-				}
+				var entities = await PagingHelper.GetPage(query, command.CurrentPage, command.PageSize).ToArrayAsync();
+				var paging = await PagingHelper.GetPagingModel(query, command.CurrentPage, command.PageSize);
 
 				return new Result()
 				{
-					Data = entity
+					Data = entities,
+					Paging = paging
 				};
 			}
 		}

@@ -9,23 +9,38 @@ namespace Timeline.Vertical.Web.Controllers.Api
 	[ApiController]
 	public class PersonsController : Controller
 	{
-		[HttpGet("Get")]
-		public async Task<IActionResult> GetPersonAsync([FromServices] GetPersonFeature feature, [FromQuery] GetPersonFeature.Command command)
+		#region Queries
+		[HttpGet("GetPerson")]
+		public async Task<IActionResult> GetPersonAsync([FromServices] GetPersonFeatureAsync feature, [FromQuery] GetPersonFeatureAsync.Command command)
 		{
 			return await this.ExecuteJson(feature, command);
 		}
 
-		[HttpGet("GetPaged")]
-		public async Task<IActionResult> GetPersonsAsync([FromServices] GetPersonsFeature feature, [FromQuery] GetPersonsFeature.Command command)
+		[HttpGet("GetPersons")]
+		public async Task<IActionResult> GetPersonsAsync([FromServices] GetPersonsFeatureAsync feature, [FromQuery] GetPersonsFeatureAsync.Command command)
 		{
 			return await this.ExecuteJson(feature, command);
 		}
 
-		[HttpGet("Delete")]
-		public async Task<IActionResult> DeletePersonAsync([FromServices] object feature, [FromQuery] object command)
+		[HttpGet("SearchPersons")]
+		public async Task<IActionResult> SearchPersonsAsync([FromServices] SearchPersonsFeatureAsync feature, [FromQuery] SearchPersonsFeatureAsync.Command command)
 		{
-			//return await this.ExecuteJson(feature, command);
-			throw new System.NotImplementedException();
+			return await this.ExecuteJson(feature, command);
 		}
+		#endregion
+
+		#region Commands
+		[HttpPost("CreatePerson")]
+		public async Task<IActionResult> CreatePersonAsync([FromServices] CreatePersonFeatureAsync feature, [FromQuery] CreatePersonFeatureAsync.Command command)
+		{
+			return await this.ExecuteOk(feature, command);
+		}
+
+		[HttpPost("DeletePerson")]
+		public async Task<IActionResult> DeletePersonAsync([FromServices] DeletePersonFeatureAsync feature, [FromQuery] DeletePersonFeatureAsync.Command command)
+		{
+			return await this.ExecuteOk(feature, command);
+		}
+		#endregion
 	}
 }

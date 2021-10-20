@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Timeline.Vertical.Features.Persons;
+using System.Linq;
+using System.Reflection;
+using Timeline.Vertical.Features.Interfaces;
 
 namespace Timeline.Vertical.Features
 {
@@ -7,27 +9,39 @@ namespace Timeline.Vertical.Features
 	{
 		public static IServiceCollection AddFeatures(this IServiceCollection services)
 		{
-			// TODO: Automatically inject all features, validators and handlers via assembly
+			return services.AddAssemblyFeatures();
+		}
 
-			services.AddScoped<GetPagedPersonOverviewFeature>()
-				.AddScoped<GetPagedPersonOverviewFeature.Validator>()
-				.AddScoped<GetPagedPersonOverviewFeature.Handler>();
+		private static IServiceCollection AddAssemblyFeatures(this IServiceCollection services)
+		{
+			var currentAssembly = Assembly.GetExecutingAssembly();
 
-			services.AddScoped<CreatePersonFeature>()
-				.AddScoped<CreatePersonFeature.Validator>()
-				.AddScoped<CreatePersonFeature.Handler>();
+			// Features
+			var featureInterface = typeof(IFeature);
+			var features = currentAssembly.GetTypes().Where(i => featureInterface.IsAssignableFrom(i) && !i.IsAbstract && !i.IsInterface);
 
-			services.AddScoped<DeletePersonFeature>()
-				.AddScoped<DeletePersonFeature.Validator>()
-				.AddScoped<DeletePersonFeature.Handler>();
+			foreach (var feature in features)
+			{
+				services.AddScoped(feature);
+			}
 
-			services.AddScoped<GetPersonFeature>()
-				.AddScoped<GetPersonFeature.Validator>()
-				.AddScoped<GetPersonFeature.Handler>();
+			// Validator
+			var validatorInterface = typeof(IValidator);
+			var validators = currentAssembly.GetTypes().Where(i => validatorInterface.IsAssignableFrom(i) && !i.IsAbstract && !i.IsInterface);
 
-			services.AddScoped<GetPersonsFeature>()
-				.AddScoped<GetPersonsFeature.Validator>()
-				.AddScoped<GetPersonsFeature.Handler>();
+			foreach (var validator in validators)
+			{
+				services.AddScoped(validator);
+			}
+
+			// Handlers
+			var handlerInterface = typeof(IHandler);
+			var handlers = currentAssembly.GetTypes().Where(i => handlerInterface.IsAssignableFrom(i) && !i.IsAbstract && !i.IsInterface);
+
+			foreach (var handler in handlers)
+			{
+				services.AddScoped(handler);
+			}
 
 			return services;
 		}

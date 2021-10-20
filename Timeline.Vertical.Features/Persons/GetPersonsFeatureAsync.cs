@@ -9,20 +9,19 @@ using Timeline.Data.Entities;
 using Timeline.Vertical.Features.Bases;
 using Timeline.Vertical.Features.Helpers;
 using Timeline.Vertical.Features.Interfaces;
+using Timeline.Web.Models.Paging;
 
 namespace Timeline.Vertical.Features.Persons
 {
-	public class GetPersonsFeature : BaseFeatureAsync<GetPersonsFeature.Validator, GetPersonsFeature.Handler, GetPersonsFeature.Command, GetPersonsFeature.Result>
+	public class GetPersonsFeatureAsync : BaseFeatureAsync<GetPersonsFeatureAsync.Validator, GetPersonsFeatureAsync.Handler, GetPersonsFeatureAsync.Command, GetPersonsFeatureAsync.Result>
 	{
-		public GetPersonsFeature(Validator validator, Handler handler)
+		public GetPersonsFeatureAsync(Validator validator, Handler handler)
 			: base(validator, handler)
 		{ }
 
 		public class Command
 		{
 			public IEnumerable<Guid> Ids { get; set; }
-
-			public IEnumerable<string> Names { get; set; }
 
 			[Range(1, ushort.MaxValue)]
 			public ushort CurrentPage { get; set; } = 1;
@@ -35,14 +34,7 @@ namespace Timeline.Vertical.Features.Persons
 		{
 			public Person[] Data { get; set; }
 
-			// TODO: Move paging to separate model class?
-			public int CurrentPage { get; set; }
-
-			public int PageSize { get; set; }
-
-			public int TotalCount { get; set; }
-
-			public bool HasNextPage { get; set; }
+			public PagingModel Paging { get; set; }
 		}
 
 		public class Validator : IValidator<Command>
@@ -76,25 +68,13 @@ namespace Timeline.Vertical.Features.Persons
 					query = query.Where(i => command.Ids.Contains(i.Id));
 				}
 
-				if (command.Names?.Any() == true)
-				{
-					query = query.Where(i => command.Names.Contains(i.Name));
-				}
-
-				// TODO: Move paging logic to helper
-				var skip = (command.CurrentPage - 1) * command.PageSize;
-				var take = command.PageSize;
-
-				var entities = await query.Skip(skip).Take(take).ToArrayAsync();
-				var totalCount = await query.CountAsync();
+				var entities = await PagingHelper.GetPage(query, command.CurrentPage, command.PageSize).ToArrayAsync();
+				var paging = await PagingHelper.GetPagingModel(query, command.CurrentPage, command.PageSize);
 
 				return new Result()
 				{
 					Data = entities,
-					CurrentPage = command.CurrentPage,
-					PageSize = command.PageSize,
-					TotalCount = totalCount,
-					HasNextPage = skip + take < totalCount
+					Paging = paging
 				};
 			}
 		}

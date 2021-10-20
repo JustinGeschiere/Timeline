@@ -8,11 +8,14 @@
 			PageSize = pageSize;
 			TotalCount = totalCount;
 
-			TotalPages = TotalCount / PageSize;
-			if (TotalCount % PageSize > 0)
+			TotalPages = totalCount / pageSize;
+			if (totalCount % pageSize > 0)
 			{
 				TotalPages++;
 			}
+
+			var skip = (currentPage - 1) * pageSize;
+			HasNextPage = skip * pageSize < totalCount;
 		}
 
 		public int CurrentPage { get; }
@@ -22,5 +25,7 @@
 		public int TotalCount { get; }
 
 		public int TotalPages { get; }
+
+		public bool HasNextPage { get; }
 	}
 }

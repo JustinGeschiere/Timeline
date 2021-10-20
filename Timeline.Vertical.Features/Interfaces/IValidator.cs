@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
-
-namespace Timeline.Vertical.Features.Interfaces
+﻿namespace Timeline.Vertical.Features.Interfaces
 {
-	public interface IValidator<TCommand>
+	public interface IValidator
+	{ }
+
+	public interface IValidator<TCommand> : IValidator
 	{
 		void Validate(TCommand command);
 	}
