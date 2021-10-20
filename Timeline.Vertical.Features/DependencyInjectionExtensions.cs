@@ -16,7 +16,6 @@ namespace Timeline.Vertical.Features
 		{
 			var currentAssembly = Assembly.GetExecutingAssembly();
 
-			// Features
 			var featureInterface = typeof(IFeature);
 			var features = currentAssembly.GetTypes().Where(i => featureInterface.IsAssignableFrom(i) && !i.IsAbstract && !i.IsInterface);
 
@@ -25,7 +24,6 @@ namespace Timeline.Vertical.Features
 				services.AddScoped(feature);
 			}
 
-			// Validator
 			var validatorInterface = typeof(IValidator);
 			var validators = currentAssembly.GetTypes().Where(i => validatorInterface.IsAssignableFrom(i) && !i.IsAbstract && !i.IsInterface);
 
@@ -34,7 +32,6 @@ namespace Timeline.Vertical.Features
 				services.AddScoped(validator);
 			}
 
-			// Handlers
 			var handlerInterface = typeof(IHandler);
 			var handlers = currentAssembly.GetTypes().Where(i => handlerInterface.IsAssignableFrom(i) && !i.IsAbstract && !i.IsInterface);
 

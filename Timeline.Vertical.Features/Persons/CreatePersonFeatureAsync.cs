@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -61,7 +62,29 @@ namespace Timeline.Vertical.Features.Persons
 
 			public async Task<Result> HandleAsync(Command command)
 			{
-				throw new NotImplementedException();
+				var utcNow = DateTime.UtcNow;
+				var name = $"{command.FirstName} {command.LastName}".Trim();
+
+				if (await _context.Persons.AnyAsync(i => i.Name.Equals(name)))
+				{
+					throw new InvalidOperationException("Person already exists");
+				}
+
+				var entity = new Person()
+				{
+					Id = Guid.NewGuid(),
+					Name = name,
+					Created = utcNow,
+					Modified = utcNow
+				};
+
+				_context.Persons.Add(entity);
+				await _context.SaveChangesAsync();
+
+				return new Result
+				{
+					Person = entity
+				};
 			}
 		}
 	}

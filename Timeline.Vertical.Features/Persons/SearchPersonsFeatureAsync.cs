@@ -21,7 +21,7 @@ namespace Timeline.Vertical.Features.Persons
 		public class Command
 		{
 			[Required]
-			public string Search;
+			public string Search { get; set; }
 
 			[Range(1, ushort.MaxValue)]
 			public ushort CurrentPage { get; set; } = 1;

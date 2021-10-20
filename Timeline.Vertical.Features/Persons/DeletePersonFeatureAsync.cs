@@ -54,7 +54,7 @@ namespace Timeline.Vertical.Features.Persons
 
 				if (entity == null)
 				{
-					throw new ArgumentException("No person could be found with the provided input");
+					throw new InvalidOperationException("No person could be found with the provided input");
 				}
 
 				return new Result()

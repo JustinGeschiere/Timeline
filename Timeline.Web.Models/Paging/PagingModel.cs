@@ -15,7 +15,7 @@
 			}
 
 			var skip = (currentPage - 1) * pageSize;
-			HasNextPage = skip * pageSize < totalCount;
+			HasNextPage = totalCount > pageSize && skip * pageSize < totalCount;
 		}
 
 		public int CurrentPage { get; }
