@@ -62,18 +62,19 @@ namespace Timeline.Vertical.Features.Persons
 
 			public async Task<Result> HandleAsync(Command command)
 			{
-				var utcNow = DateTime.UtcNow;
-				var name = $"{command.FirstName} {command.LastName}".Trim();
-
-				if (await _context.Persons.AnyAsync(i => i.Name.Equals(name)))
+				if (await _context.Persons.AnyAsync(i => i.EmailAddress.Equals(command.EmailAddress)))
 				{
-					throw new InvalidOperationException("Person already exists");
+					throw new InvalidOperationException("The provided e-mail address is already in use");
 				}
+
+				var utcNow = DateTime.UtcNow;
 
 				var entity = new Person()
 				{
 					Id = Guid.NewGuid(),
-					Name = name,
+					FirstName = command.FirstName.Trim(),
+					LastName = command.LastName.Trim(),
+					EmailAddress = command.EmailAddress.ToLower().Trim(),
 					Created = utcNow,
 					Modified = utcNow
 				};

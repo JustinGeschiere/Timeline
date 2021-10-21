@@ -54,8 +54,11 @@ namespace Timeline.Vertical.Features.Persons
 
 				if (entity == null)
 				{
-					throw new InvalidOperationException("No person could be found with the provided input");
+					throw new InvalidOperationException("No person could be found");
 				}
+
+				_context.Persons.Remove(entity);
+				await _context.SaveChangesAsync();
 
 				return new Result()
 				{

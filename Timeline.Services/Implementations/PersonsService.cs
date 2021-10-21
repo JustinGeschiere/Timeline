@@ -46,19 +46,19 @@ namespace Timeline.Services.Implementations
 			var entity = new Person()
 			{
 				Id = Guid.NewGuid(),
-				Name = $"{char.ToUpper(model.Name[0])}{model.Name.Substring(1)}",
+				FirstName = $"{char.ToUpper(model.Name[0])}{model.Name.Substring(1)}",
 				Created = utcNow,
 				Modified = utcNow
 			};
 
-			if (_personsRepository.GetByName(entity.Name) == null)
+			if (_personsRepository.GetByName(entity.FirstName) == null)
 			{
 				_personsRepository.Add(entity);
-				_logger.LogInformation($"Added person '{entity.Name}' : '{entity.Id}'");
+				_logger.LogInformation($"Added person '{entity.FirstName}' : '{entity.Id}'");
 			}
 			else
 			{
-				_logger.LogInformation($"Person with name '{entity.Name}' already exists");
+				_logger.LogInformation($"Person with name '{entity.FirstName}' already exists");
 			}
 		}
 
@@ -69,11 +69,11 @@ namespace Timeline.Services.Implementations
 			if (entity != null)
 			{
 				_personsRepository.Remove(entity);
-				_logger.LogInformation($"Removed person '{entity.Name}' : '{entity.Id}'");
+				_logger.LogInformation($"Removed person '{entity.FirstName}' : '{entity.Id}'");
 			}
 			else
 			{
-				_logger.LogInformation($"Person with name '{entity.Name}' does not exist");
+				_logger.LogInformation($"Person with name '{entity.FirstName}' does not exist");
 			}
 		}
 	}

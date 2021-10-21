@@ -61,7 +61,7 @@ namespace Timeline.Vertical.Features.Persons
 
 			public async Task<Result> HandleAsync(Command command)
 			{
-				IQueryable<Person> query = _context.Persons.Where(i => i.Name.Contains(command.Search));
+				IQueryable<Person> query = _context.Persons.Where(i => i.FullName.Contains(command.Search) || i.EmailAddress.Contains(command.Search));
 
 				var entities = await PagingHelper.GetPage(query, command.CurrentPage, command.PageSize).ToArrayAsync();
 				var paging = await PagingHelper.GetPagingModel(query, command.CurrentPage, command.PageSize);

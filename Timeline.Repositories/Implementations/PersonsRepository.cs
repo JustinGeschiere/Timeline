@@ -26,7 +26,7 @@ namespace Timeline.Repositories.Implementations
 
 		public Person GetByName(string name)
 		{
-			return _context.Persons.Where(i => i.Name.Equals(name)).FirstOrDefault();
+			return _context.Persons.Where(i => i.FirstName.Equals(name)).FirstOrDefault();
 		}
 
 		public void Add(Person entity)

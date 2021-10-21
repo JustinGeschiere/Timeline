@@ -8,7 +8,7 @@ namespace Timeline.Web.Models.Persons
 		public IndexItemModel(Person entity)
 		{
 			Id = entity.Id;
-			Name = entity.Name;
+			Name = entity.FirstName;
 			Created = entity.Created.ToLocalTime().ToLongDateString();
 			Modified = entity.Created.Equals(entity.Modified) ? "-" : entity.Modified.ToLocalTime().ToLongDateString();
 		}

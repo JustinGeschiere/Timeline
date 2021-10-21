@@ -19,9 +19,8 @@ namespace Timeline.Vertical.Features.Persons
 
 		public class Command
 		{
+			[Required]
 			public Guid Id { get; set; }
-
-			public string Name { get; set; }
 		}
 
 		public class Result
@@ -34,11 +33,6 @@ namespace Timeline.Vertical.Features.Persons
 			public void Validate(Command command)
 			{
 				var exceptions = ValidationHelper.ValidateAnnotations(command);
-
-				if (Guid.Empty.Equals(command.Id) && string.IsNullOrWhiteSpace(command.Name))
-				{
-					exceptions = exceptions.Append(new ValidationException($"Either {nameof(command.Id)} or {nameof(command.Name)} is required"));
-				}
 
 				if (exceptions.Any())
 				{
@@ -58,23 +52,11 @@ namespace Timeline.Vertical.Features.Persons
 
 			public async Task<Result> HandleAsync(Command command)
 			{
-				IQueryable<Person> query = _context.Persons;
-
-				if (!Guid.Empty.Equals(command.Id))
-				{
-					query = query.Where(i => i.Id == command.Id);
-				}
-
-				if (!string.IsNullOrWhiteSpace(command.Name))
-				{
-					query = query.Where(i => i.Name.Equals(command.Name));
-				}
-
-				var entity = await query.FirstOrDefaultAsync();
+				var entity = await _context.Persons.FindAsync(command.Id);
 
 				if (entity == null)
 				{
-					throw new ArgumentException("No person could be found with the provided input");
+					throw new ArgumentException("No person could be found");
 				}
 
 				return new Result()

@@ -26,7 +26,7 @@ namespace Timeline.Web.Controllers
 		public IActionResult Me()
 		{
 			var person = _personContext.CurrentPerson;
-			return Content(_personContext.CurrentPerson?.Name ?? "No dibsed person");
+			return Content(_personContext.CurrentPerson?.FirstName ?? "No dibsed person");
 		}
 
 		public IActionResult Dibs([FromQuery] DibsInputModel model)
